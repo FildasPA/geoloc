@@ -5,7 +5,7 @@
 - [X] connecter raspberry en ssh
 - [X] relier la pile RTC au raspberry en configurant le bus i2c
 - [ ] connecter raspberry au wifi
-- [ ] connecter raspberry au module ZigBee
+- [X] connecter raspberry au module ZigBee
 - [ ] créer l'interface permettant de localiser l'appareil dans la pièce
 
 ## Résumé des séances
@@ -24,6 +24,10 @@
 ### 19 novembre
 
 - Communication coordinateur / balise (pas terminé)
+
+### 23 novembre
+
+- Réception du RSSI coordinateur / balise + filtrage (seulement notre RSSI)
 
 ---
 
