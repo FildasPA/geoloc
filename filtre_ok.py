@@ -6,8 +6,7 @@ import pymongo
 # Réseau
 PORT = "/dev/ttyS0"
 BAUD_RATE = 9600
-DATA_TO_SEND = 'mdr'
-WAIT = 2 # in seconds
+
 # Balises
 REMOTE_NODE_ID = 'BALISE_1'
 REMODE_DEVICES = {
@@ -18,7 +17,11 @@ REMODE_DEVICES = {
     # 'BALISE_5': ''
 }
 
-# Database
+# Paquets
+DATA_TO_SEND = 'mdr'
+WAIT = 2 # in seconds
+
+# Base de données
 BDD_CLIENT = 'mongodb://localhost:27017'
 BDD_NAME = 'pymongo_test'
 
@@ -45,6 +48,7 @@ def packet_received_callback(packet):
 def add_record(beacon, rssi):
     """Enregistre le RSSI d'une balise pour une position donnée."""
     pass
+
 
 def main():
 
