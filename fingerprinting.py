@@ -15,22 +15,21 @@ import pandas as pd
 import threading
 import term
 import readchar
-from StringIO import StringIO
+# from StringIO import StringIO
 
 WAIT = 2 # in seconds
 PROMPT_SYMBOL = term.green + '\n❯ ' + term.off
 MAX_COLUMNS = 10
 
-REMOTE_DEVICES = {
-		'BALISE_1': '',
-		'BALISE_2': '',
-		'BALISE_3': '',
-		'BALISE_4': '',
-		'BALISE_5': ''
-}
+REMOTE_DEVICES = [
+		'BALISE_1',
+		'BALISE_2',
+		'BALISE_3',
+		'BALISE_4',
+		'BALISE_5'
+]
 
-balises = sorted([name for name, address in REMOTE_DEVICES.items()])
-df = pd.DataFrame(index=balises)
+df = pd.DataFrame(index=REMOTE_DEVICES)
 
 
 class UserInput(threading.Thread):
@@ -59,22 +58,25 @@ class UserInput(threading.Thread):
 			sys.stdout.write(c)
 			sys.stdout.flush()
 
-			if c == 'q':
-				print('')
-				print(term.yellow + 'Exiting...' + term.off)
-				sending.end = True
-				return
-
 			command = c + raw_input()
 
 			# Traitement commande
-
-			# term.up(1)
-			# term.clearLine()
-			# term.up(1)
+			result = self.process_command(command)
+			if result is True:
+				return
 			self.print_prompt()
 
 			sending.resume()
+
+
+	def process_command(self, command):
+		if command[0] == 'q':
+			print(term.yellow + 'Exiting...' + term.off)
+			sending.end = True
+			return True
+		elif command[0] == 's':
+			print('Lul')
+		return False
 
 
 class SendData(threading.Thread):
@@ -91,6 +93,7 @@ class SendData(threading.Thread):
 
 
 	def get_len_header(self):
+		return 2
 
 
 	def print_table(self):
@@ -104,7 +107,8 @@ class SendData(threading.Thread):
 
 
 	def refresh_table(self):
-		term.up(len(self)-1)
+		term.homePos()
+		term.down(self.get_len_header())
 		self.print_table()
 		term.restoreCursor()
 
