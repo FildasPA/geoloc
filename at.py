@@ -7,7 +7,7 @@ print(ser.name)
 
 def readline(ser):
     res = ''
-    print('Reading line')
+    # print('Reading line')
     while True:
         byte = ser.read()
         if byte == '\r':
@@ -16,7 +16,7 @@ def readline(ser):
 
 def read_beacon_infos(ser):
     infos = []
-    print('Reading beacon')
+    # print('Reading beacon')
     while True:
         line = readline(ser)
         if line == '':
@@ -26,9 +26,10 @@ def read_beacon_infos(ser):
 
 def read_beacons(ser):
     beacons_infos = []
-    print('Reading beacons infos')
+    # print('Reading beacons infos')
     while True:
         infos = read_beacon_infos(ser)
+        print('')
         if not infos:
             return beacons_infos
         beacons_infos.append(infos)
@@ -39,10 +40,10 @@ while True:
     ser.write('+++')
     sleep(1)
 
-    incomingByte = ser.read(size=2);
+    incomingByte = ser.read(size=3);
 
     if (incomingByte == 'OK'):
-        print('Initialized!')
+        print('+++')
         sleep(1)
         incomingByte = ''
         ser.write('ATND\r')
