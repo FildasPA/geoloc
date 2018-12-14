@@ -11,6 +11,7 @@ from digi.xbee.packets.base import DictKeys
 PORT = "/dev/ttyS0"
 BAUD_RATE = 9600
 DISCOVERY_TIMEOUT = 5 # in seconds
+MSG = 'mdr' # message à envoyer aux balises
 
 # Balises
 REMOTE_DEVICES = [
@@ -21,12 +22,8 @@ REMOTE_DEVICES = [
     'BALISE_5'
 ]
 
-# Paquets
-DATA_TO_SEND = 'mdr'
-WAIT = 2 # in seconds
 
-
-class Sender():
+class Communication():
 
     def __init__(self):
         self.initialize_network()
@@ -49,8 +46,8 @@ class Sender():
             print('Network opened')
 
         # Initialise le réseau
-        self.xbee_network = self.device.get_network()
-        self.xbee_network.set_discovery_timeout(DISCOVERY_TIMEOUT)
+        self.network = self.device.get_network()
+        self.network.set_discovery_timeout(DISCOVERY_TIMEOUT)
 
         # Etablit une connexion avec les balises voulues
         for node_id, adress in REMOTE_DEVICES.iteritems():
@@ -66,13 +63,17 @@ class Sender():
             self.device.close()
 
 
+    def get_values(self):
+        return self.values
+
+
     def clear_values(self):
         self.values.clear()
 
 
     def connect_remote_device(self, remote_node_id):
         try:
-            remote_device = self.xbee_network.discover_device(remote_node_id)
+            remote_device = self.network.discover_device(remote_node_id)
         except (TimeoutException, XBeeException,
                 InvalidOperatingModeException, ATCommandException,
                 ValueError) as e:
@@ -94,11 +95,15 @@ class Sender():
             print("Received response from: {}, RSSI: {}, Data: {}".format(address16, rssi, data.decode()))
             if data.decode() == DATA_TO_SEND:
                 print("C'est notre paquet !")
-                node = self.xbee_network.get_device_by_16(addres16).get_node_id()
+                node = self.network.get_device_by_16(addres16).get_node_id()
                 self.values[node] = rssi
                 # https://xbplib.readthedocs.io/en/latest/api/digi.xbee.devices.html#digi.xbee.devices.DigiPointNetwork.get_device_by_16
 
 
-    def send_data(self, remote_device, device):
+    def send_data_all(self):
+        for remove_device in self.network:
+            self.send_data(remote_device)
+
+    def send_data(self, remote_device):
         """Envoie un message à une balise."""
-        device.send_data_async(remote_device, DATA_TO_SEND)
+        self.device.send_data_async(remote_device, MSG)

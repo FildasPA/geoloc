@@ -4,9 +4,12 @@
 
 - [X] connecter raspberry en ssh
 - [X] relier la pile RTC au raspberry en configurant le bus i2c
-- [ ] connecter raspberry au wifi
+- [X] connecter raspberry au wifi
 - [X] connecter raspberry au module ZigBee
-- [ ] créer l'interface permettant de localiser l'appareil dans la pièce
+- [ ] Phase de finger printing
+	- [ ] BDD
+- [ ] Geolocalisation
+	- [ ] créer l'interface permettant de localiser l'appareil dans la pièce
 
 ## Résumé des séances
 
@@ -159,12 +162,13 @@ __Balise__
 
 __Coordinateur__
 
-- `Channel` : D
-- `ID PAN ID` : C133
-- `DL` : BAF2
+- `Channel` : B
+- `ID PAN ID` : C233
+- `DL` : FFFF
 - `MY` : BC2
 - `CE` : Coordinator
 - `API` : API disabled [0]
+- `CHCB`
 
 #### Putty (tester la communication)
 

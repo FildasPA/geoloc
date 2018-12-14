@@ -15,7 +15,7 @@ import pandas as pd
 import threading
 import term
 import readchar
-# from StringIO import StringIO
+# from communication import Communication
 
 WAIT = 2 # in seconds
 PROMPT_SYMBOL = term.green + '\n❯ ' + term.off
@@ -86,6 +86,7 @@ class SendData(threading.Thread):
 		self.active = False
 		self.end = False
 		self.df = df
+		# self.communication = Communication()
 
 
 	def __len__(self):
@@ -94,35 +95,6 @@ class SendData(threading.Thread):
 
 	def get_len_header(self):
 		return 2
-
-
-	def print_table(self):
-		term.left(1000)
-		term.clearLine()
-		for c in str(self.df):
-			sys.stdout.write(c)
-			if c == '\n':
-				term.left(1000)
-				term.clearLine()
-
-
-	def refresh_table(self):
-		term.homePos()
-		term.down(self.get_len_header())
-		self.print_table()
-		term.restoreCursor()
-
-
-	def send_data(self):
-		# TO REMOVE
-		self.append_data([random.randint(-100, 0) for index in self.df.index])
-
-
-	def append_data(self, fingerprinting):
-		self.df[len(self.df.columns)] = fingerprinting
-		if len(self.df.columns) > MAX_COLUMNS:
-			self.df.drop(self.df.columns[0], axis=1, inplace=True)
-			self.df = self.df.rename(index=str, columns={i:i-1 for i in self.df.columns})
 
 
 	def refresh_status(self):
@@ -143,6 +115,40 @@ class SendData(threading.Thread):
 		print('RSSI: [' + status + term.off + ']')
 
 
+	def print_table(self):
+		term.left(1000)
+		term.clearLine()
+		for c in str(self.df):
+			sys.stdout.write(c)
+			if c == '\n':
+				term.left(1000)
+				term.clearLine()
+
+
+	def refresh_table(self):
+		term.homePos()
+		term.down(self.get_len_header())
+		self.print_table()
+		term.restoreCursor()
+
+
+	def send_data(self):
+		self.append_data([random.randint(-100, 0) for index in self.df.index])
+		# self.communication.send_data_all()
+
+
+	def get_rssi(self):
+		self.append_data(self.communication.get_values())
+		self.communication.clear_values()
+
+
+	def append_data(self, fingerprinting):
+		self.df[len(self.df.columns)] = fingerprinting
+		if len(self.df.columns) > MAX_COLUMNS:
+			self.df.drop(self.df.columns[0], axis=1, inplace=True)
+			self.df = self.df.rename(index=str, columns={i:i-1 for i in self.df.columns})
+
+
 	def stop(self):
 		self.active = False
 		self.refresh_status()
@@ -161,10 +167,12 @@ class SendData(threading.Thread):
 		while not self.end:
 			if self.active:
 				self.send_data()
-				self.refresh_table()
 				sleep(WAIT)
+				if self.active:
+					# self.get_rssi()
+					self.refresh_table()
 			else:
-				sleep(1)
+				sleep(0.1)
 
 
 sending = SendData(df)
