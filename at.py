@@ -42,7 +42,7 @@ while True:
 
     incomingByte = ser.read(size=3);
 
-    if (incomingByte == 'OK'):
+    if (incomingByte == 'OK\r'):
         print('+++')
         sleep(1)
         incomingByte = ''
