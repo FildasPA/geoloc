@@ -15,11 +15,12 @@ MSG = 'mdr' # message à envoyer aux balises
 
 # Balises
 REMOTE_DEVICES = [
-    'BALISE_1'
-    'BALISE_2'
-    'BALISE_3'
-    'BALISE_4'
-    'BALISE_5'
+    'BALISE_1',
+    'PetitSuix'
+    # 'BALISE_2'
+    # 'BALISE_3'
+    # 'BALISE_4'
+    # 'BALISE_5'
 ]
 
 
