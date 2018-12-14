@@ -20,17 +20,23 @@ while True:
         incomingByte = ''
         ser.write('ATND\r')
         res = ''
+        eol = False
         while True:
             incomingByte = ser.read()
             #print(repr('Lu: %s' % incomingByte))
-            if incomingByte == '\r' and res == '\r':
+            if eol and incomingByte == '\r':
                 break
-            res += incomingByte
+            # if incomingByte == '\r' and res == '\r':
+            #     break
             #print('res: %s' % repr(res))
 
-            if incomingByte == '\r' and res != '\r':
+            if incomingByte == '\r':
                 print(repr(res))
                 res = ''
+                eol = True
+            else:
+                res += incomingByte
+                eol = False
         print('fin de la boucle!')
 
         #incomingByte = ser.read(size=10);
