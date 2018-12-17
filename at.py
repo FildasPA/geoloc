@@ -2,7 +2,7 @@ import serial
 from time import sleep
 import db
 
-ser = serial.Serial('/dev/ttyS0', baudrate=9600)
+ser = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2)
 
 BEACONS = [
     'BALISE_1',
