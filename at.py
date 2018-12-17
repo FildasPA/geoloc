@@ -10,7 +10,7 @@ finger = {}
 
 
 def add_infos(node_id, rssi):
-    if not finger[node_id]:
+    if node_id not in finger:
         finger[node_id] = rssi
 
 
@@ -43,7 +43,6 @@ def read_beacons(ser):
         infos = read_beacon_infos(ser)
         if not infos:
             return beacons_infos
-        beacon, rssi
         beacons_infos.append({'beacons': infos[-1], 'rssi': infos[-2]})
 
 
