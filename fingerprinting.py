@@ -9,27 +9,31 @@
 import os
 import sys
 import random
-import numpy as np
+# import numpy as np
 from time import sleep
-import pandas as pd
+# import pandas as pd
 import threading
 import term
 import readchar
 # from communication import Communication
+import at
+import db
+
 
 WAIT = 2 # in seconds
-PROMPT_SYMBOL = term.green + '\n❯ ' + term.off
+PROMPT_SYMBOL = term.green('\n❯ ')
 MAX_COLUMNS = 10
 
 REMOTE_DEVICES = [
-		'BALISE_1',
-		'BALISE_2',
-		'BALISE_3',
-		'BALISE_4',
-		'BALISE_5'
+		# 'BALISE_1',
+		'OBJET_2',
+		# 'BALISE_3',
+		# 'BALISE_4',
+		# 'BALISE_5'
 ]
 
-df = pd.DataFrame(index=REMOTE_DEVICES)
+# df = pd.DataFrame(index=REMOTE_DEVICES)
+bdd = db.BDD()
 
 
 class UserInput(threading.Thread):
@@ -75,22 +79,34 @@ class UserInput(threading.Thread):
 			sending.end = True
 			return True
 		elif command[0] == 's':
-			print('Lul')
+			n = raw_input('n ? ')
+			fingers = self.sending
+			# print()
+			fingers['x'] = raw_input('x ? ')
+			fingers['y'] = raw_input('y ? ')
+			print(fingers)
+			bdd.add_fingerprint(fingers)
+			self.sending.clear_fingers()
 		return False
 
 
 class SendData(threading.Thread):
 
-	def __init__(self, df):
+	def __init__(self):
 		threading.Thread.__init__(self)
 		self.active = False
 		self.end = False
-		self.df = df
+		self.fingers = {}
+		# self.df = df
 		# self.communication = Communication()
 
 
+	def clear_fingers(self):
+		self.fingers = {}
+
+
 	def __len__(self):
-		return len(self.df.index) + 3
+		return len(self.fingers) + self.get_len_header() + 1
 
 
 	def get_len_header(self):
@@ -133,20 +149,23 @@ class SendData(threading.Thread):
 
 
 	def send_data(self):
-		self.append_data([random.randint(-100, 0) for index in self.df.index])
+		# self.append_data([random.randint(-100, 0) for index in self.df.index])
 		# self.communication.send_data_all()
+		self.append_data(at.send())
 
 
-	def get_rssi(self):
-		self.append_data(self.communication.get_values())
-		self.communication.clear_values()
+	# def get_rssi(self):
+	# 	self.append_data(self.communication.get_values())
+	# 	self.communication.clear_values()
 
 
-	def append_data(self, fingerprinting):
-		self.df[len(self.df.columns)] = fingerprinting
-		if len(self.df.columns) > MAX_COLUMNS:
-			self.df.drop(self.df.columns[0], axis=1, inplace=True)
-			self.df = self.df.rename(index=str, columns={i:i-1 for i in self.df.columns})
+	def append_data(self, finger):
+		self.fingers = dict(self.fingers.items() + finger.items())
+		# self.df[len(self.df.columns)] = fingerprinting
+		# if len(self.df.columns) > MAX_COLUMNS:
+		# 	self.df.drop(self.df.columns[0], axis=1, inplace=True)
+		# 	self.df = self.df.rename(index=str, columns={i:i-1 for i in self.df.columns})
+
 
 
 	def stop(self):
@@ -167,7 +186,7 @@ class SendData(threading.Thread):
 		while not self.end:
 			if self.active:
 				self.send_data()
-				sleep(WAIT)
+				# sleep(WAIT)
 				if self.active:
 					# self.get_rssi()
 					self.refresh_table()
@@ -175,7 +194,7 @@ class SendData(threading.Thread):
 				sleep(0.1)
 
 
-sending = SendData(df)
+sending = SendData()
 
 user = UserInput(sending)
 
