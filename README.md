@@ -32,6 +32,10 @@
 
 - Réception du RSSI coordinateur / balise + filtrage (seulement notre RSSI)
 
+### 14 décembre
+
+- Recommencé la communication coordinateur / end device en mode AT car le mode API ne fonctionne pas (au niveau des balises). Désormais, les balises changent de PANID pour chaque groupe (1 PANID par coordinateur) pour qu'il n'y ai pas d'"interférences".
+
 ---
 
 ## [Cours] Positionnement par multilatération : RSS & fingerprinting
@@ -118,6 +122,10 @@ sudo apt-get dist-upgrade
 
 ### Se connecter en SSH au Raspberry
 
+Avoir l'adresse IP :
+
+`ifconfig`
+
 [Tutoriel](https://the-raspberry.com/ssh-raspberry-pi)
 
 ```
@@ -159,6 +167,7 @@ __Balise__
 - `CA` : 28 -DBM
 - `CE` : End Device [0]
 - `API` : API disabled [0]
+- `BD` : 115 200 [7]
 
 __Coordinateur__
 
@@ -168,6 +177,7 @@ __Coordinateur__
 - `MY` : BC2
 - `CE` : Coordinator
 - `API` : API disabled [0]
+- `BD` : 115 200 [7]
 - `CHCB`
 
 #### Putty (tester la communication)
@@ -221,7 +231,11 @@ Balise => mode API
 | Balise4 | 0013A20041511D0C |
 | Balise5 | 0013A20041512DCD |
 
+---
 
+ATND
+
+respecter le timeout
 
 dmesg | grep tty
 
