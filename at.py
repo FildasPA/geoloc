@@ -30,8 +30,9 @@ def read_beacon_infos(ser):
     # print('Reading beacon')
     while True:
         line = readline(ser)
+        print(line)
         if line == '':
-            add_infos(infos[-1], infos[-2])
+            # add_infos(infos[-1], infos[-2])
             return infos[-2:]
         # print(line)
         infos.append(line)
@@ -41,8 +42,10 @@ def read_beacons(ser):
     # print('Reading beacons infos')
     while True:
         infos = read_beacon_infos(ser)
+        print(infos)
         if not infos:
             return beacons_infos
+        add_infos(infos[-1], infos[-2])
         beacons_infos.append({'beacons': infos[-1], 'rssi': infos[-2]})
 
 
