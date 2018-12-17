@@ -32,12 +32,12 @@ def read_beacon_infos(ser):
 
 
 def read_beacons(ser):
-    beacons_infos = []
+    beacons_infos = {}
     while True:
         infos = read_beacon_infos(ser)
         if not infos:
             return beacons_infos
-        beacons_infos.append({infos[-1]: infos[-2]})
+        beacons_infos[infos[-1]] = infos[-2]
 
 
 def send():
