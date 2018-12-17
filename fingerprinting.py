@@ -75,7 +75,7 @@ class UserInput(threading.Thread):
 
 	def process_command(self, command):
 		if command[0] == 'q':
-			print(term.yellow + 'Exiting...' + term.off)
+			print(term.yellow('Exiting...'))
 			sending.end = True
 			return True
 		elif command[0] == 's':
@@ -124,11 +124,11 @@ class SendData(threading.Thread):
 
 	def print_status(self):
 		if self.active:
-			status = term.green + 'ACTIF'
+			status = term.green('ACTIF')
 		else:
-			status = term.red + 'ARRET'
+			status = term.red('ARRET')
 
-		print('RSSI: [' + status + term.off + ']')
+		print('RSSI: [' + status + ']')
 
 
 	def print_table(self):
@@ -160,7 +160,8 @@ class SendData(threading.Thread):
 
 
 	def append_data(self, finger):
-		self.fingers = dict(self.fingers.items() + finger.items())
+		if finger:
+			self.fingers = dict(self.fingers.items() + finger.items())
 		# self.df[len(self.df.columns)] = fingerprinting
 		# if len(self.df.columns) > MAX_COLUMNS:
 		# 	self.df.drop(self.df.columns[0], axis=1, inplace=True)
