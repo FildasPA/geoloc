@@ -1,5 +1,6 @@
 import serial
 from time import sleep
+import db
 
 ser = serial.Serial('/dev/ttyS0', baudrate=115200)
 
@@ -7,11 +8,15 @@ ser = serial.Serial('/dev/ttyS0', baudrate=115200)
 print(ser.name)
 
 finger = {}
+bdd = db.BDD()
+
 
 
 def add_infos(node_id, rssi):
     if node_id not in finger:
         finger[node_id] = rssi
+    bdd.add_fingerprint({'x': 0, 'y': 1, node_id: finger[node_id]})
+    print(bdd.get_all_values())
 
 
 def readline(ser):
@@ -45,8 +50,8 @@ def read_beacons(ser):
         print(infos)
         if not infos:
             return beacons_infos
-        add_infos(infos[-1], infos[-2])
-        beacons_infos.append({'beacons': infos[-1], 'rssi': infos[-2]})
+        # add_infos(infos[-1], infos[-2])
+        beacons_infos.append({infos[-1]: infos[-2]})
 
 
 def send():
