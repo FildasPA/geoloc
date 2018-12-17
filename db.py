@@ -19,13 +19,11 @@ class BDD:
         """values = {'x': N, 'y': N, 'BALISE_1': N, 'BALISE_2': N, ..., 'BALISE_5': N}"""
         self.db.fingers.insert_one(values).inserted_id
         print("Valeur ajoutée !")
-        pass
 
 
     def get_all_values(self):
         """Renvoie toutes les valeurs"""
-        self.db.fingers.find()
-        pass
+        return self.db.fingers.find()
 
 b = BDD()
 values = {"x":"0","y":"0","BALISE_1":"0","BALISE_2":"0","BALISE_3":"0","BALISE_4":"0","BALISE_5":"0"}
