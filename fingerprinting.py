@@ -134,11 +134,11 @@ class SendData(threading.Thread):
 	def print_table(self):
 		term.left(1000)
 		term.clearLine()
-		for c in str(self.df):
-			sys.stdout.write(c)
-			if c == '\n':
-				term.left(1000)
-				term.clearLine()
+
+		for node_id, value in self.fingers:
+			term.left(1000)
+			term.clearLine()
+			print(node_id + ' : ' + value)
 
 
 	def refresh_table(self):

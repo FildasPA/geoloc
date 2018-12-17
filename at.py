@@ -46,7 +46,7 @@ def send():
     sleep(1)
     incomingByte = ser.read(size=3)
     if (incomingByte == 'OK\r'):
-        print('+++')
+        # print('+++')
         sleep(1)
         incomingByte = ''
         ser.write('ATND\r')
