@@ -1,44 +1,67 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Geolocalisation BS</title>
-        <style>
-		body {
-			<!--background-image: url("static/plan.png");
-			background-position: center;
-			background-repeat: no-repeat;
-			width: 100%;
-			height: 100%;
-		}
-		contenu {
-			background-size: contain
-			
-			x:0 y:0 pour le point
-			bottom: 133px
-			left: 126px
-			
-			-->
-		}
-		.contenu {
-			position: relative;
-		}
-		.dot {
-			position: absolute;
-			bottom: {{bottom}};
-			left: {{left}};
-			height: 25px;
-            width: 25px;
-			background-color: red;
-			display: inline-block;
-		}
+	<head>
+		<meta charset="utf-8" />
+		<title>Geolocalisation BS</title>
+		<style>
+			.contenu {
+				position: relative;
+				width: 1000px;
+				height: 1000px;
+			}
+			.dot {
+				position: absolute;
+				height: 25px;
+				width: 25px;
+				background-color: red;
+				display: inline-block;
+			}
 		</style>
-    </head>
+		<script>
+			// Send a request to the server asking for the position
+			function sendRequest() {
+				var xmlhttp = new XMLHttpRequest();
 
-    <body>
+				xmlhttp.onreadystatechange = function() {
+					if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+						if (xmlhttp.status == 200) {
+							var coor = JSON.parse(xmlhttp.responseText);
+							updatePosition(coor['x'], coor['y']);
+						}	else {
+							console.log('A problem occured during AJAX requesting');
+						}
+					}
+				};
+
+				xmlhttp.open("GET", "/getPosition", true);
+				xmlhttp.send();
+			}
+
+			// Refresh position every 2 seconds
+			var intervalID = window.setInterval(refreshPosition, 2000);
+			function refreshPosition() {
+				sendRequest();
+			}
+
+			// Update XBee icon position on the map
+			function updatePosition(x, y) {
+				console.log('x: '+x+', y: '+y);
+				x = String(126 + x * 122)+'px';
+				y = String(133 + y * 122)+'px';
+				document.getElementById('dot').style.left = x;
+				document.getElementById('dot').style.bottom = y;
+			}
+
+			window.onload = function() {
+				updatePosition({{x}}, {{y}});
+			}
+		</script>
+	</head>
+
+	<body>
 		<div class="contenu">
 			<img src="static/plan-cropped.png">
-			<span class="dot"></span>
-        </div>
-    </body>
+			<span class="dot" id="dot"></span>
+		</div>
+	</body>
 </html>
