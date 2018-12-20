@@ -15,8 +15,7 @@ BEACONS = [
 
 print(ser.name)
 
-fingers = {}
-bdd = db.BDD()
+fingerprints = {}
 
 
 def readline(ser):
@@ -48,8 +47,8 @@ def read_beacons(ser):
         beacons_infos[infos[-1]] = infos[-2]
 
 
-def send():
-    global fingers
+def send(func):
+    global fingerprints
 
     sleep(0.2)
     ser.write('+++')
@@ -63,13 +62,11 @@ def send():
         finger = read_beacons(ser)
         if finger:
             print(finger)
-            fingers = dict(fingers.items() + finger.items())
-        if all(key in fingers for key in BEACONS):
-            print('ALL: ' + str(fingers))
-            fingers['x'] = raw_input('x ? ')
-            fingers['y'] = raw_input('y ? ')
-            bdd.add_fingerprint(fingers)
-            fingers = {}
+            fingerprints = dict(fingerprints.items() + finger.items())
+        if all(key in fingerprints for key in BEACONS):
+            print('ALL: ' + str(fingerprints))
+            func(fingerprints)
+            fingerprints = {}
         # ser.write('ATCN\r')
 
 
