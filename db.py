@@ -4,11 +4,15 @@
 import pymongo
 
 
+URI = 'mongodb://localhost:27017'
+DB = 'defi'
+
+
 class BDD:
     def __init__(self):
         """Initialise la connexion avec la BDD"""
-        self.client = pymongo.MongoClient('mongodb://localhost:27017')
-        self.db = self.client.defi
+        self.client = pymongo.MongoClient(URI)
+        self.db = self.client.get_database(DB)
 
 
     def __del__(self):
