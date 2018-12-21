@@ -5,21 +5,26 @@ import requests
 
 from db import DB
 import at
-from matrix import Matrix
+import matrix
 
 
 db = DB()
 
 values = db.get_all_values()
 
-for d in values:
-    matrix.append(d)
+m = matrix.Matrix(columns=['x', 'y',
+                           'BALISE_1',
+                           'BALISE_2',
+                           'BALISE_3',
+                           'BALISE_4',
+                           'BALISE_5'])
 
-print(matrix)
+for d in values:
+    m.append(d)
+
 
 def calculate_position(values):
-    values = {k:v for values}
-    nearest = matrix.get_nearest(values)
+    nearest = m.get_nearest(values, 4)
     x = 0
     y = 0
     for row in nearest:
@@ -35,7 +40,7 @@ def calculate_position(values):
 
 
 def get_position():
-    at.get_fingerprint(calculate_position, 0, 0)
+    at.get_fingerprint(calculate_position)
 
 
 def main():
