@@ -10,8 +10,6 @@ import at
 max_x = 3
 max_y = 3
 
-URL = 'http://10.120.14.37:5000/'
-
 db = DB()
 
 
@@ -30,11 +28,11 @@ def main():
             print('Doing: (%s, %s)' % (x, y))
 
             params = {'x': x, 'y': y}
-            requests.get(url=URL, params=params)
+            requests.get(url='http://10.120.14.37:5000/setPosition', params=params)
 
             at.send(insert_print)
 
-            requests.get(url='10.120.13.52')
+            requests.get(url='http://10.120.13.52:5001')
 
 
 if __name__ == "__main__":
