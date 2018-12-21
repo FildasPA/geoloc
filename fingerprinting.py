@@ -14,8 +14,8 @@ db = DB()
 
 
 def insert_print(values):
-    fingerprints['x'] = raw_input('x ? ')
-    fingerprints['y'] = raw_input('y ? ')
+    # values['x'] = raw_input('x ? ')
+    # values['y'] = raw_input('y ? ')
 
     db.insert_print(values)
 
@@ -30,7 +30,7 @@ def main():
             params = {'x': x, 'y': y}
             requests.get(url='http://10.120.14.37:5000/setPosition', params=params)
 
-            at.get_fingerprint(insert_print)
+            at.get_fingerprint(insert_print, x, y)
 
             requests.get(url='http://10.120.13.52:5001')
 

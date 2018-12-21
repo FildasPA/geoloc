@@ -67,15 +67,15 @@ def send():
         # ser.write('ATCN\r')
 
 
-def get_fingerprint(func):
+def get_fingerprint(func, x, y):
     global fingerprints
+    fingerprints = {'x': x, 'y': y}
 
     while True:
         send()
         if all(key in fingerprints for key in BEACONS):
             print('ALL: ' + str(fingerprints))
             func(fingerprints)
-            fingerprints = {}
             break
 
 def main():
