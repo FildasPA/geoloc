@@ -72,12 +72,12 @@ class Matrix:
         return self.get(columns=['x', 'y'], index=nearest_indexes[:k])
 
 
-def main():
-    matrix = Matrix(columns=['x','y'])
+def test():
+    matrix = Matrix(columns=['BALISE_1','BALISE_2', 'x', 'y'])
 
-    matrix.append({'x': 5, 'y': 3})
-    matrix.append({'x': 10, 'y': 8})
-    matrix.append({'x': 7, 'y': 1})
+    matrix.append({'x': 1, 'y': 1, 'BALISE_1': 40, 'BALISE_2': 30})
+    matrix.append({'x': 4, 'y': 4, 'BALISE_1': 50, 'BALISE_2': 20})
+    matrix.append({'x': 7, 'y': 7, 'BALISE_1': 60, 'BALISE_2': 10})
 
     print(matrix)
 
@@ -88,7 +88,20 @@ def main():
 
     # print(matrix.get(columns=['y']))
 
-    print(matrix.get_nearest({'x': 7, 'y': 2}, 1))
+    nearest = matrix.get_nearest({'BALISE_2': 15, 'BALISE_3': 10}, 2)
+    # nearest = matrix.get_nearest({'BALISE_1': 55, 'BALISE_2': 15, 'BALISE_3': 10}, 2)
+
+    x = 0
+    y = 0
+    for row in nearest:
+        x += row['x']
+        y += row['y']
+
+    x /= float(len(nearest))
+    y /= float(len(nearest))
+
+    params = {'x': x, 'y': y}
+    print(params)
 
 if __name__ == "__main__":
-    main()
+    test()
