@@ -67,9 +67,9 @@ def send():
         # ser.write('ATCN\r')
 
 
-def get_fingerprint(func, x, y):
+def get_fingerprint(func):
     global fingerprints
-    fingerprints = {'x': x, 'y': y}
+    fingerprints = {}
 
     while True:
         send()
