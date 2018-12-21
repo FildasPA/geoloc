@@ -44,7 +44,7 @@ def read_beacons(ser):
         infos = read_beacon_infos(ser)
         if not infos:
             return beacons_infos
-        beacons_infos[infos[-1]] = infos[-2]
+        beacons_infos[infos[-1]] = int(infos[-2], 16)
 
 
 def send():
