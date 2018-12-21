@@ -6,10 +6,8 @@
 - [X] relier la pile RTC au raspberry en configurant le bus i2c
 - [X] connecter raspberry au wifi
 - [X] connecter raspberry au module ZigBee
-- [ ] Phase de finger printing
-	- [ ] BDD
-- [ ] Geolocalisation
-	- [ ] créer l'interface permettant de localiser l'appareil dans la pièce
+- [X] Phase de finger printing
+- [X] Geolocalisation
 
 ## Résumé des séances
 
@@ -35,6 +33,20 @@
 ### 14 décembre
 
 - Recommencé la communication coordinateur / end device en mode AT car le mode API ne fonctionne pas (au niveau des balises). Désormais, les balises changent de PANID pour chaque groupe (1 PANID par coordinateur) pour qu'il n'y ai pas d'"interférences".
+
+### 17 décembre
+
+- complété la communication en mode AT & récupération des RSSI pour chaque balise
+
+### 21 décembre
+
+- [X] __Fingerprinting__
+	- [X] Enregistrement dans la bdd
+	- [X] Radiomap de la salle : enregistrement des valeurs du RSSI pour 56 positions différentes dans la salle
+- [X] __Géolocalisation__
+	- [X] affichage de la carte de la salle
+	- [X] mise à jour de la position du coordinateur à intervalle régulier
+
 
 ---
 
@@ -240,3 +252,8 @@ respecter le timeout
 dmesg | grep tty
 
 AT P0 (RSSI)
+
+---
+
+- lissage dans le temps
+- éliminer une valeur d'une balise
