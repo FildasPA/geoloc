@@ -47,15 +47,16 @@ def read_beacons(ser):
         beacons_infos[infos[-1]] = infos[-2]
 
 
-def send(func):
+def send():
     global fingerprints
 
     sleep(0.2)
     ser.write('+++')
+    print('+++')
     sleep(1)
     incomingByte = ser.read(size=3)
     if (incomingByte == 'OK\r'):
-        print('+++')
+        print('OK')
         sleep(1)
         incomingByte = ''
         ser.write('ATND\r')
@@ -63,12 +64,19 @@ def send(func):
         if finger:
             print(finger)
             fingerprints = dict(fingerprints.items() + finger.items())
+        # ser.write('ATCN\r')
+
+
+def get_fingerprint(func):
+    global fingerprints
+
+    while True:
+        send()
         if all(key in fingerprints for key in BEACONS):
             print('ALL: ' + str(fingerprints))
             func(fingerprints)
             fingerprints = {}
-        # ser.write('ATCN\r')
-
+            break
 
 def main():
     while True:

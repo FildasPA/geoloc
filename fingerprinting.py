@@ -30,7 +30,7 @@ def main():
             params = {'x': x, 'y': y}
             requests.get(url='http://10.120.14.37:5000/setPosition', params=params)
 
-            at.send(insert_print)
+            at.get_fingerprint(insert_print)
 
             requests.get(url='http://10.120.13.52:5001')
 
