@@ -1,6 +1,14 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""Les fonctions de ce script permettent de communiquer avec les balises et de
+récupérer les informations retournées, dont le RSSI.
+
+Notamment, la fonction get_fingerprint permet de récupérer une empreinte
+complète : des messages sont envoyés aux balises jusqu'à avoir récupérer les informations de toutes les balises avant que l'ensemble de ces informations ne
+soit retourné."""
+
 import serial
 from time import sleep
-import db
 
 ser = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2)
 
@@ -15,20 +23,20 @@ BEACONS = [
 
 print(ser.name)
 
-fingerprints = {}
-
 
 def readline(ser):
-    res = ''
+    """Lis et retourne une ligne reçue sur le port série"""
+
+    line = ''
     while True:
         byte = ser.read()
-        if byte == '\r':
-            return res
-        res += byte
+        if byte == '\r': # fin de ligne ?
+            return line
+        line += byte
 
 
 def read_beacon_infos(ser):
-    global finger
+    """Lis et retourne toutes les informations d'une balise."""
 
     infos = []
     while True:
@@ -39,6 +47,8 @@ def read_beacon_infos(ser):
 
 
 def read_beacons(ser):
+    """"Lis et retourne les informations de toutes les balises."""
+
     beacons_infos = {}
     while True:
         infos = read_beacon_infos(ser)
@@ -48,6 +58,8 @@ def read_beacons(ser):
 
 
 def send():
+    """Envoie un message aux balises et ajoute leurs réponses à fingerprints"""
+
     global fingerprints
 
     sleep(0.2)
@@ -64,12 +76,13 @@ def send():
         if finger:
             print(finger)
             fingerprints = dict(fingerprints.items() + finger.items())
-        # ser.write('ATCN\r')
 
 
-def get_fingerprint(func):
+def get_fingerprint(func, infos={}):
+    """Envoie des messages aux balises. Une fois la réponse de chacune d'entre elles reçue, appelle func avec en paramètre les informations reçues (nom de balise + RSSI)."""
+
     global fingerprints
-    fingerprints = {}
+    fingerprints = infos
 
     while True:
         send()
@@ -77,6 +90,7 @@ def get_fingerprint(func):
             print('ALL: ' + str(fingerprints))
             func(fingerprints)
             break
+
 
 def main():
     while True:
