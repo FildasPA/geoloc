@@ -67,7 +67,7 @@ class Matrix:
 
 
     def get_nearest(self, dictionnary, k):
-        distances = {i:sum([abs(dictionnary[label]-row[0][label]) for label in dictionnary.keys()]) for i, row in self}
+        distances = {i:sum([abs(dictionnary[label]-row[0][label]) for label in list(set(self.columns) & set(dictionnary.keys()))]) for i, row in self}
         nearest_indexes = sorted(distances, key=distances.get)
         return self.get(columns=['x', 'y'], index=nearest_indexes[:k])
 
