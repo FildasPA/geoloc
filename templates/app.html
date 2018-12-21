@@ -14,6 +14,13 @@
 				background-color: red;
 				display: inline-block;
 			}
+			.balise {
+				position: absolute;
+				height: 25px;
+				width: 25px;
+				background-color: blue;
+				display: inline-block;
+			}
 		</style>
 		<script>
 			// Send a request to the server asking for the position
@@ -24,7 +31,7 @@
 					if (xmlhttp.readyState == XMLHttpRequest.DONE) {
 						if (xmlhttp.status == 200) {
 							var coor = JSON.parse(xmlhttp.responseText);
-							updatePosition(coor['x'], coor['y']);
+							updatePosition(coor['x'], coor['y'], 'dot');
 						}	else {
 							console.log('A problem occured during AJAX requesting');
 						}
@@ -42,16 +49,21 @@
 			}
 
 			// Update XBee icon position on the map
-			function updatePosition(x, y) {
+			function updatePosition(x, y,id) {
 				console.log('x: '+x+', y: '+y);
 				x = String(126 + x * 122)+'px';
 				y = String(133 + y * 122)+'px';
-				document.getElementById('dot').style.left = x;
-				document.getElementById('dot').style.bottom = y;
+				document.getElementById(id).style.left = x;
+				document.getElementById(id).style.bottom = y;
 			}
 
 			window.onload = function() {
-				updatePosition({{x}}, {{y}});
+				updatePosition({{x}}, {{y}},'dot');
+				updatePosition(1, 0,'BALISE_1');
+				updatePosition(5, 0,'BALISE_2');
+				updatePosition(2, 7,'BALISE_3');
+				updatePosition(6, 7,'BALISE_4');
+				updatePosition(0, 3,'BALISE_5');
 			}
 		</script>
 	</head>
@@ -60,6 +72,11 @@
 		<div class="contenu">
 			<img src="static/plan-cropped.png">
 			<span class="dot" id="dot"></span>
+			<span class="balise" id="BALISE_1"></span>
+			<span class="balise" id="BALISE_2"></span>
+			<span class="balise" id="BALISE_3"></span>
+			<span class="balise" id="BALISE_4"></span>
+			<span class="balise" id="BALISE_5"></span>
 		</div>
 	</body>
 </html>
