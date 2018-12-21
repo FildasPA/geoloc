@@ -29,8 +29,13 @@ class DB:
         """Renvoie toutes les valeurs"""
         return self.db.fingers.find()
 
+def main():
+    b = DB()
+    values = {"x":"0","y":"0","BALISE_1":"0","BALISE_2":"0","BALISE_3":"0","BALISE_4":"0","BALISE_5":"0"}
+    b.insert(values)
+    b.get_all_values()
 
-b = DB()
-values = {"x":"0","y":"0","BALISE_1":"0","BALISE_2":"0","BALISE_3":"0","BALISE_4":"0","BALISE_5":"0"}
-b.insert(values)
-b.get_all_values()
+
+if __name__ == "__main__":
+    main()
+
