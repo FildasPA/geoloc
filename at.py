@@ -75,7 +75,7 @@ def send():
             fingerprints = dict(fingerprints.items() + finger.items())
 
 
-def get_fingerprint(func, infos={}):
+def get_fingerprint(infos={}):
     """Envoie des messages aux balises. Une fois la réponse de chacune d'entre elles reçue, appelle func avec en paramètre les informations reçues (nom de balise + RSSI)."""
 
     global fingerprints
@@ -85,8 +85,7 @@ def get_fingerprint(func, infos={}):
         send()
         if all(key in fingerprints for key in BEACONS):
             print('ALL: ' + str(fingerprints))
-            func(fingerprints)
-            break
+            return fingerprints
 
 
 def main():

@@ -15,7 +15,6 @@ import requests
 from db import DB
 import at
 
-
 max_x = 8
 max_y = 8
 
@@ -31,11 +30,29 @@ def record(x, y):
 
     params = {'x': x, 'y': y}
     try:
-        requests.get(url='localhost:5000/setPosition', params=params, timeout=5)
-    except (requests.exceptions.Timeout, requests.exceptions.ConnectionError):
+        requests.get(url='http://localhost:5000/setPosition', params=params, timeout=5)
+    except Exception as e:
         pass
 
-    at.get_fingerprint(insert_print, {'x':x, 'y':y})
+    avg_fingerprint = {}
+    n = 5
+    for i in range(0, n+1):
+        print('RECORDING (%s, %s) #%s' % (x, y, n))
+        fingerprint = at.get_fingerprint({'x':x, 'y':y})
+
+        for key, value in fingerprint.iteritems():
+            if key not in avg_fingerprint:
+                avg_fingerprint[key] = value
+            else:
+                avg_fingerprint[key] += value
+
+    for key, value in avg_fingerprint.iteritems():
+        if key != 'x' and key != 'y':
+            avg_fingerprint[key] /= 5
+
+    print('RECORDED: %s' % avg_fingerprint)
+    insert_print(avg_fingerprint)
+
 
 
 def main():

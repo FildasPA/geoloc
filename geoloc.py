@@ -49,7 +49,7 @@ def calculate_position(values):
 
 
 def get_position():
-    at.get_fingerprint(calculate_position)
+    calculate_position(at.get_fingerprint())
 
 
 def main():
