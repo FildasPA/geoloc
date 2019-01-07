@@ -47,6 +47,11 @@
 	- [X] affichage de la carte de la salle
 	- [X] mise à jour de la position du coordinateur à intervalle régulier
 
+### 08 janvier
+
+- modifié `fingerprinting.py`
+- __fingerprinting__ de la 1ère rangée
+
 
 ---
 
