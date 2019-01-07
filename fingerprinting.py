@@ -31,8 +31,8 @@ def record(x, y):
 
     params = {'x': x, 'y': y}
     try:
-        requests.get(url='http://10.120.14.37:5000/setPosition', params=params, timeout=5)
-    except requests.exceptions.Timeout:
+        requests.get(url='localhost:5000/setPosition', params=params, timeout=5)
+    except (requests.exceptions.Timeout, requests.exceptions.ConnectionError):
         pass
 
     at.get_fingerprint(insert_print, {'x':x, 'y':y})
