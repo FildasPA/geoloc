@@ -62,14 +62,11 @@ def send():
 
     global fingerprints
 
-    sleep(0.2)
     ser.write('+++')
     print('+++')
-    sleep(1)
     incomingByte = ser.read(size=3)
     if (incomingByte == 'OK\r'):
         print('OK')
-        sleep(1)
         incomingByte = ''
         ser.write('ATND\r')
         finger = read_beacons(ser)
