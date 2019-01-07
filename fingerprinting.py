@@ -14,10 +14,19 @@ import requests
 
 from db import DB
 import at
-from time import sleep
+import time
 
 max_x = 7
 max_y = 8
+
+BEACONS = [
+    'BALISE_1',
+    'BALISE_2',
+    'BALISE_3',
+    'BALISE_4',
+    'BALISE_5'
+]
+
 
 db = DB()
 
@@ -29,49 +38,51 @@ def insert_print(values):
 def record(x, y):
     print('Doing: (%s, %s)' % (x, y))
 
+    # Met à jour la position du coordinateur sur le serveur
     params = {'x': x, 'y': y}
     try:
         requests.get(url='http://localhost:5000/setPosition', params=params, timeout=5)
     except Exception as e:
         pass
 
-    avg_fingerprint = {}
+    # Accorde un délai pour positionner le coordinateur
+    time.sleep(5)
+
+    rssi_lists = {beacon:list() for beacon in BEACONS}
     n = 5
-    for i in range(n):
+    # Tant qu'on a pas au moins n valeurs pour chaque balise
+    while all(len(lst) < n for beacon, lst in rssi_lists.iteritems()):
         print('RECORDING (%s, %s) #%s' % (x, y, i))
-        fingerprint = at.get_fingerprint()
+        # Récupère les RSSI renvoyés par les balises actuellement disponibles
+        values = at.send()
+        for beacon, rssi in values.iteritems():
+            rssi_lists[beacon].append(rssi)
 
-        for key, value in fingerprint.iteritems():
-            if key not in avg_fingerprint:
-                avg_fingerprint[key] = value
-            else:
-                avg_fingerprint[key] += value
+    # Calcule la moyenne des RSSIs pour chaque balise
+    fingerprint = {}
+    for beacon, lst in rssi_lists.iteritems():
+        fingerprint[beacon] = sum(lst) / float(len(lst))
 
-    for key, value in avg_fingerprint.iteritems():
-        avg_fingerprint[key] /= n
+    fingerprint['x'] = x
+    fingerprint['y'] = y
 
-    avg_fingerprint['x'] = x
-    avg_fingerprint['y'] = y
-
-    print('RECORDED: %s' % avg_fingerprint)
-    insert_print(avg_fingerprint)
+    insert_print(fingerprint)
 
 
 def main():
     x = 0
     y = 0
 
+    # Effectue un parcours en zigzag
     while x < max_x:
         if x % 2 == 0:
             while y < max_y:
                 record(x, y)
-                sleep(3)
                 y += 1
             y = max_y - 1
         else:
             while y >= 0:
                 record(x, y)
-                sleep(3)
                 y -= 1
             y = 0
         x += 1
