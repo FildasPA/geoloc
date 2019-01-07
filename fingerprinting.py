@@ -14,8 +14,9 @@ import requests
 
 from db import DB
 import at
+from time import sleep
 
-max_x = 8
+max_x = 7
 max_y = 8
 
 db = DB()
@@ -36,7 +37,7 @@ def record(x, y):
 
     avg_fingerprint = {}
     n = 5
-    for i in range(0, n+1):
+    for i in range(n):
         print('RECORDING (%s, %s) #%s' % (x, y, i))
         fingerprint = at.get_fingerprint({'x':x, 'y':y})
 
@@ -48,26 +49,27 @@ def record(x, y):
 
     for key, value in avg_fingerprint.iteritems():
         if key != 'x' and key != 'y':
-            avg_fingerprint[key] /= 5
+            avg_fingerprint[key] /= n
 
     print('RECORDED: %s' % avg_fingerprint)
     insert_print(avg_fingerprint)
 
 
-
 def main():
-    x = 5
-    y = 2
+    x = 0
+    y = 0
 
     while x < max_x:
         if x % 2 == 0:
             while y < max_y:
                 record(x, y)
+                sleep(3)
                 y += 1
             y = max_y - 1
         else:
             while y >= 0:
                 record(x, y)
+                sleep(3)
                 y -= 1
             y = 0
         x += 1
