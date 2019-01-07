@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Implémentation d'une matrice."""
+"""Implémentation d'une matrice. Permet de récupérer les informations par ligne
+ou par colonne. Dispose également d'une fonction (get_nearest) permettant de
+récupérer la ligne la plus similaire à une autre ligne envoyée en paramètres."""
 
 class Matrix:
     def __init__(self, columns=[]):
@@ -31,6 +33,7 @@ class Matrix:
 
 
     def get(self, columns=None, index=None):
+        """Récupère les informations par colonnes et/ou par lignes."""
         result = []
 
         for i, row in enumerate(self.matrix):
@@ -66,8 +69,10 @@ class Matrix:
         return self.i, self[self.i]
 
 
-    def get_nearest(self, dictionnary, k):
-        distances = {i:sum([abs(dictionnary[label]-row[0][label]) for label in list(set(self.columns) & set(dictionnary.keys()))]) for i, row in self}
+    def get_nearest(self, dic, k):
+        """Renvoie les k lignes les plus similaires au dictionnaire dic.
+        Seules les clés de dic sont utilisées pour la comparaison."""
+        distances = {i:sum([abs(dic[label]-row[0][label]) for label in list(set(self.columns) & set(dic.keys()))]) for i, row in self}
         nearest_indexes = sorted(distances, key=distances.get)
         return self.get(columns=['x', 'y'], index=nearest_indexes[:k])
 

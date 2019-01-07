@@ -6,7 +6,7 @@
 - [X] relier la pile RTC au raspberry en configurant le bus i2c
 - [X] connecter raspberry au wifi
 - [X] connecter raspberry au module ZigBee
-- [X] Phase de finger printing
+- [X] Phase de fingerprinting
 - [X] Geolocalisation
 
 ## Résumé des séances
@@ -257,3 +257,7 @@ AT P0 (RSSI)
 
 - lissage dans le temps
 - éliminer une valeur d'une balise
+
+- Socket
+- Couleurs terminal
+- Corriger AT, paramètres optionnels ?

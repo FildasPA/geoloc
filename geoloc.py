@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""Ce script permet de géolocaliser l'objet.
+
+A chaque itération, une empreinte est relevée et comparée à celles stockées dans
+la bdd remplie lors de la phase de fingerprinting.
+La position de l'objet est calculée en faisant la moyenne des k positions dont
+les empreintes correspondantes sont les plus similaires (et qui sont sensées
+correspondre aux positions les plus proches)."""
 
 import requests
 
