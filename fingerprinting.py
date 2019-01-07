@@ -37,7 +37,7 @@ def record(x, y):
     avg_fingerprint = {}
     n = 5
     for i in range(0, n+1):
-        print('RECORDING (%s, %s) #%s' % (x, y, n))
+        print('RECORDING (%s, %s) #%s' % (x, y, i))
         fingerprint = at.get_fingerprint({'x':x, 'y':y})
 
         for key, value in fingerprint.iteritems():
