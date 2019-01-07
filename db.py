@@ -5,7 +5,7 @@ import pymongo
 
 
 URI = 'mongodb://localhost:27017'
-DB_NAME = 'defi'
+DB_NAME = 'geogeloc'
 
 
 class DB:
