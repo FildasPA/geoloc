@@ -39,7 +39,7 @@ def record(x, y):
     n = 5
     for i in range(n):
         print('RECORDING (%s, %s) #%s' % (x, y, i))
-        fingerprint = at.get_fingerprint({'x':x, 'y':y})
+        fingerprint = at.get_fingerprint()
 
         for key, value in fingerprint.iteritems():
             if key not in avg_fingerprint:
@@ -48,8 +48,10 @@ def record(x, y):
                 avg_fingerprint[key] += value
 
     for key, value in avg_fingerprint.iteritems():
-        if key != 'x' and key != 'y':
-            avg_fingerprint[key] /= n
+        avg_fingerprint[key] /= n
+
+    avg_fingerprint['x'] = x
+    avg_fingerprint['y'] = y
 
     print('RECORDED: %s' % avg_fingerprint)
     insert_print(avg_fingerprint)

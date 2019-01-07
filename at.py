@@ -75,11 +75,11 @@ def send():
             fingerprints = dict(fingerprints.items() + finger.items())
 
 
-def get_fingerprint(infos={}):
+def get_fingerprint():
     """Envoie des messages aux balises. Une fois la réponse de chacune d'entre elles reçue, appelle func avec en paramètre les informations reçues (nom de balise + RSSI)."""
 
     global fingerprints
-    fingerprints = infos
+    fingerprints = {}
 
     while True:
         send()
