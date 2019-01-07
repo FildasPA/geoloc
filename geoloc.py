@@ -14,7 +14,6 @@ from db import DB
 import at
 import matrix
 
-
 db = DB()
 
 values = db.get_all_values()
@@ -43,7 +42,10 @@ def calculate_position(values):
 
     params = {'x': x, 'y': y}
     for row in nearest:
-        requests.get(url='http://10.120.14.37:5000/setPosition', params=params, timeout=5)
+      try:
+        requests.get(url='http://localhost:5000/setPosition', params=params, timeout=5)
+      except Exception as e:
+        pass
 
 
 def get_position():
