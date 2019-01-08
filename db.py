@@ -6,7 +6,7 @@ import term
 
 
 URI = 'mongodb://localhost:27017'
-DB_NAME = 'geogeloc'
+DB_NAME = 'cartographie1'
 
 
 class DB:
