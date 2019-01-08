@@ -72,7 +72,8 @@ def send():
         finger = read_beacons(ser)
         if finger:
             print(finger)
-            fingerprints = dict(fingerprints.items() + finger.items())
+        return finger
+            # fingerprints = dict(fingerprints.items() + finger.items())
 
 
 def get_fingerprint():
