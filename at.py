@@ -1,18 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Les fonctions de ce script permettent de communiquer avec les balises et de
-récupérer les informations retournées, dont le RSSI.
+"""Les fonctions de ce script permettent de communiquer avec les balises
+et de récupérer les informations retournées, dont le RSSI.
 
 Notamment, la fonction get_fingerprint permet de récupérer une empreinte
-complète : des messages sont envoyés aux balises jusqu'à avoir récupérer les informations de toutes les balises avant que l'ensemble de ces informations ne
-soit retourné."""
+complète : des messages sont envoyés jusqu'à avoir récupérer un nombre
+donné de valeurs pour chaque balise, qui seront ensuite moyennées."""
 
 import serial
 from time import sleep
 import term
 
-ser = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2)
-
+# Nombre de valeurs à récupérer par balise pour constituer une empreinte
+n = 5
+# Noms des balises à considérer
 BEACONS = [
     'BALISE_1',
     'BALISE_2',
@@ -21,7 +22,8 @@ BEACONS = [
     'BALISE_5'
 ]
 
-
+# Initialise le port série pour communiquer avec les balises
+ser = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2)
 print(ser.name)
 
 
@@ -59,29 +61,35 @@ def read_beacons(ser):
 
 
 def send():
-    """Envoie un message aux balises et ajoute leurs réponses à fingerprints"""
+    """Envoie la commande 'ATND' aux balises et retourne
+    les informations reçues.
 
-    global fingerprints
-
+    La commande 'ATND' retourne les informations suivantes:
+    - adresse MY
+    - numéro de série SH (partie haute)
+    - numéro de série SL (partie basse)
+    - RSSI (force du signal radio)
+    - nom du module"""
     ser.write('+++')
     print(term.yellow('+++'))
     incomingByte = ser.read(size=3)
     if (incomingByte == 'OK\r'):
         term.clear_previous_line()
         print(term.green('OK'))
-        incomingByte = ''
         ser.write('ATND\r')
         finger = read_beacons(ser)
         if finger:
             term.clear_previous_line()
             print(finger)
         return finger
-            # fingerprints = dict(fingerprints.items() + finger.items())
 
 
 def get_fingerprint():
+    """Communique avec les balises jusqu'à avoir récupéré au moins n valeurs
+    pour chaque balise, puis retourne l'empreinte constituée des moyennes de
+    ces valeurs."""
+    global n
     rssi_lists = {beacon:list() for beacon in BEACONS}
-    n = 5
     # Tant qu'on a pas au moins n valeurs pour chaque balise
     while not all(len(lst) >= n for beacon, lst in rssi_lists.iteritems()):
         # Récupère les RSSI renvoyés par les balises actuellement disponibles
