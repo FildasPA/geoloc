@@ -2,13 +2,7 @@
 # -*- coding: utf-8 -*-
 """Ce script permet de réaliser la cartographie radio de la salle.
 Pour chaque position donnée, des valeurs RSSI correspondant à chaque balise sont relevées. Cette empreinte est associée à une position (x,y) puis enregistrée
-dans une bdd.
-
-position (x,y). une empreinte est relevée, associée à une position
-(x, y) et enregistrée dans
-le module XBee commnique avec les balises jusqu'à
-avoir récupéré le RSSI associé à chacune d'elles. Cette empreinte (fingerprint)
-est ensuite enregistrée dans une bdd."""
+dans une bdd."""
 
 import requests
 
