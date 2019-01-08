@@ -51,6 +51,7 @@ def calculate_position(values):
 
 def get_position():
     fingerprint = at.get_fingerprint()
+    print('fingerprint: %s' % fingerprint)
     calculate_position(fingerprint)
 
 
