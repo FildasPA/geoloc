@@ -20,15 +20,6 @@ import term
 max_x = 7
 max_y = 8
 
-BEACONS = [
-    'BALISE_1',
-    'BALISE_2',
-    'BALISE_3',
-    'BALISE_4',
-    'BALISE_5'
-]
-
-
 db = DB()
 
 
@@ -50,20 +41,8 @@ def record(x, y):
     # Accorde un délai pour positionner le coordinateur
     time.sleep(5)
 
-    rssi_lists = {beacon:list() for beacon in BEACONS}
-    n = 5
-    # Tant qu'on a pas au moins n valeurs pour chaque balise
-    while all(len(lst) < n for beacon, lst in rssi_lists.iteritems()):
-        # Récupère les RSSI renvoyés par les balises actuellement disponibles
-        values = at.send()
-        if values:
-            for beacon, rssi in values.iteritems():
-                rssi_lists[beacon].append(rssi)
-
-    # Calcule la moyenne des RSSIs pour chaque balise
-    fingerprint = {}
-    for beacon, lst in rssi_lists.iteritems():
-        fingerprint[beacon] = int(sum(lst) / float(len(lst)))
+    # Récupère une empreinte
+    fingerprint = at.get_fingerprint()
 
     fingerprint['x'] = x
     fingerprint['y'] = y

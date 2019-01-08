@@ -80,16 +80,22 @@ def send():
 
 
 def get_fingerprint():
-    """Envoie des messages aux balises. Une fois la réponse de chacune d'entre elles reçue, appelle func avec en paramètre les informations reçues (nom de balise + RSSI)."""
+    rssi_lists = {beacon:list() for beacon in BEACONS}
+    n = 5
+    # Tant qu'on a pas au moins n valeurs pour chaque balise
+    while not all(len(lst) >= n for beacon, lst in rssi_lists.iteritems()):
+        # Récupère les RSSI renvoyés par les balises actuellement disponibles
+        values = send()
+        if values:
+            for beacon, rssi in values.iteritems():
+                rssi_lists[beacon].append(rssi)
 
-    global fingerprints
-    fingerprints = {}
+    # Calcule la moyenne des RSSIs pour chaque balise
+    fingerprint = {}
+    for beacon, lst in rssi_lists.iteritems():
+        fingerprint[beacon] = int(sum(lst) / float(len(lst)))
 
-    while True:
-        send()
-        if all(key in fingerprints for key in BEACONS):
-            print('ALL: ' + str(fingerprints))
-            return fingerprints
+    return fingerprint
 
 
 def main():
