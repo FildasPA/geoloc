@@ -52,7 +52,6 @@ def record(x, y):
     n = 5
     # Tant qu'on a pas au moins n valeurs pour chaque balise
     while all(len(lst) < n for beacon, lst in rssi_lists.iteritems()):
-        print('RECORDING (%s, %s) #%s' % (x, y, i))
         # Récupère les RSSI renvoyés par les balises actuellement disponibles
         values = at.send()
         for beacon, rssi in values.iteritems():
