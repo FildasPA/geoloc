@@ -32,8 +32,8 @@ for d in values:
 
 def calculate_position(values):
     nearest = m.get_nearest(values, 4)
-    x = 0
-    y = 0
+    x = 0.0
+    y = 0.0
     for row in nearest:
         x += row['x']
         y += row['y']
