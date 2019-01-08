@@ -9,6 +9,7 @@ soit retourné."""
 
 import serial
 from time import sleep
+import term
 
 ser = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2)
 
@@ -66,11 +67,13 @@ def send():
     print('+++')
     incomingByte = ser.read(size=3)
     if (incomingByte == 'OK\r'):
+        term.clear_previous_line()
         print('OK')
         incomingByte = ''
         ser.write('ATND\r')
         finger = read_beacons(ser)
         if finger:
+            term.clear_previous_line()
             print(finger)
         return finger
             # fingerprints = dict(fingerprints.items() + finger.items())
