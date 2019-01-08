@@ -60,7 +60,7 @@ def record(x, y):
     # Calcule la moyenne des RSSIs pour chaque balise
     fingerprint = {}
     for beacon, lst in rssi_lists.iteritems():
-        fingerprint[beacon] = sum(lst) / float(len(lst))
+        fingerprint[beacon] = int(sum(lst) / float(len(lst)))
 
     fingerprint['x'] = x
     fingerprint['y'] = y
