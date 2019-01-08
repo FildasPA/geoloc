@@ -47,10 +47,16 @@
 	- [X] affichage de la carte de la salle
 	- [X] mise à jour de la position du coordinateur à intervalle régulier
 
-### 08 janvier
+### 07 janvier
 
 - modifié `fingerprinting.py`
 - __fingerprinting__ de la 1ère rangée
+
+### 08 janvier
+
+- finalisation des scripts python
+- ajout du numéro des balises sur l'interface graphique (site web)
+- 2 cartographies de la salle en utilisant des moyennes de 5 valeurs pour chaque balise
 
 
 ---
