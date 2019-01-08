@@ -22,7 +22,7 @@ class DB:
     def insert(self, values):
         """values = {'x': N, 'y': N, 'BALISE_1': N, 'BALISE_2': N, ..., 'BALISE_5': N}"""
         self.db.fingers.insert_one(values)
-        print("%s inserted!" % values)
+        print("%s: %s" % (term.green('Inserted'), values))
 
 
     def get_all_values(self):

@@ -64,11 +64,11 @@ def send():
     global fingerprints
 
     ser.write('+++')
-    print('+++')
+    print(term.yellow('+++'))
     incomingByte = ser.read(size=3)
     if (incomingByte == 'OK\r'):
         term.clear_previous_line()
-        print('OK')
+        print(term.green('OK'))
         incomingByte = ''
         ser.write('ATND\r')
         finger = read_beacons(ser)

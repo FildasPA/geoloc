@@ -15,6 +15,7 @@ import requests
 from db import DB
 import at
 import time
+import term
 
 max_x = 7
 max_y = 8
@@ -36,6 +37,7 @@ def insert_print(values):
 
 
 def record(x, y):
+    term.print_separator('-')
     print('Doing: (%s, %s)' % (x, y))
 
     # Met à jour la position du coordinateur sur le serveur
