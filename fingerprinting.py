@@ -56,8 +56,9 @@ def record(x, y):
     while all(len(lst) < n for beacon, lst in rssi_lists.iteritems()):
         # Récupère les RSSI renvoyés par les balises actuellement disponibles
         values = at.send()
-        for beacon, rssi in values.iteritems():
-            rssi_lists[beacon].append(rssi)
+        if values:
+            for beacon, rssi in values.iteritems():
+                rssi_lists[beacon].append(rssi)
 
     # Calcule la moyenne des RSSIs pour chaque balise
     fingerprint = {}

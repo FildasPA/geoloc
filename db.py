@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import pymongo
+import term
 
 
 URI = 'mongodb://localhost:27017'
