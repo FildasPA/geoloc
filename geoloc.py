@@ -20,10 +20,10 @@ db = DB()
 values = db.get_all_values()
 
 m = matrix.Matrix(columns=['x', 'y',
-                           # 'BALISE_1',
-                           # 'BALISE_2',
-                           # 'BALISE_3',
-                           # 'BALISE_4',
+                           'BALISE_1',
+                           'BALISE_2',
+                           'BALISE_3',
+                           'BALISE_4',
                            'BALISE_5'])
 
 for d in values:
