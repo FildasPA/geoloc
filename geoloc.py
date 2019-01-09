@@ -42,6 +42,9 @@ def calculate_position(values):
     y /= len(nearest)
 
     params = {'x': x, 'y': y}
+    for beacon in BEACONS:
+      params[beacon] = values[beacon]
+
     for row in nearest:
       try:
         requests.get(url='http://localhost:5000/setPosition', params=params, timeout=5)
