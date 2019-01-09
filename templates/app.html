@@ -70,10 +70,10 @@
 			function updatePosition(x, y, id,
 			                        balise_1, balise_2, balise_3, balise_4, balise_5, date) {
 				console.log('x: '+x+', y: '+y);
-				x = String(126 + x * 122)+'px';
-				y = String(133 + y * 122)+'px';
-				document.getElementById(id).style.left = x;
-				document.getElementById(id).style.bottom = y;
+				var left = String(126 + x * 122)+'px';
+				var bottom = String(133 + y * 122)+'px';
+				document.getElementById(id).style.left = left;
+				document.getElementById(id).style.bottom = bottom;
 
 				document.getElementById('BALISE_1_RSSI').innerHTML = balise_1;
 				document.getElementById('BALISE_2_RSSI').innerHTML = balise_2;
