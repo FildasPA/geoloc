@@ -14,23 +14,29 @@ from db import DB
 import at
 import matrix
 
+BEACONS = [
+    'BALISE_1',
+    'BALISE_2',
+    'BALISE_3',
+    'BALISE_4',
+    'BALISE_5'
+]
+
+columns = ['x', 'y']
+columns.extend(BEACONS)
+
+m = matrix.Matrix(columns=columns)
+
 
 db = DB()
-
 values = db.get_all_values()
-
-m = matrix.Matrix(columns=['x', 'y',
-                           'BALISE_1',
-                           'BALISE_2',
-                           'BALISE_3',
-                           'BALISE_4',
-                           'BALISE_5'])
-
 for d in values:
     m.append(d)
 
 
 def calculate_position(values):
+    global BEACONS
+
     nearest = m.get_nearest(values, 4)
     x = 0.0
     y = 0.0
