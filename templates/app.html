@@ -94,12 +94,10 @@
 				els = document.getElementsByClassName("rssi");
 				if(document.getElementById("BALISE_1_RSSI").style.visibility=="visible") {
 					Array.prototype.forEach.call(els, function(el) {
-						console.log('hidden: '+el);
 						el.style.visibility = "hidden";
 					});
 				} else {
 					Array.prototype.forEach.call(els, function(el) {
-						console.log('display: '+el);
 						el.style.visibility = "visible";
 					});
 				}
