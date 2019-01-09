@@ -17,10 +17,11 @@ def index():
 
 @app.route('/setPosition')
 def setPosition():
-    global x, y
-    x = request.args.get('x')
-    y = request.args.get('y')
-    print(request.args)
+    # global x, y
+    # x = request.args.get('x')
+    # y = request.args.get('y')
+    for arg in request.args:
+        print(arg)
     return ''
 
 
