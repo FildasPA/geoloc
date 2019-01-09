@@ -48,7 +48,8 @@
 							               coor['BALISE_2'],
 							               coor['BALISE_3'],
 							               coor['BALISE_4'],
-							               coor['BALISE_5']);
+							               coor['BALISE_5'],
+							               coor['date']);
 						}	else {
 							console.log('A problem occured during AJAX requesting');
 						}
@@ -67,7 +68,7 @@
 
 			// Update XBee icon position on the map
 			function updatePosition(x, y, id,
-			                        balise_1, balise_2, balise_3, balise_4, balise_5) {
+			                        balise_1, balise_2, balise_3, balise_4, balise_5, date) {
 				console.log('x: '+x+', y: '+y);
 				x = String(126 + x * 122)+'px';
 				y = String(133 + y * 122)+'px';
@@ -79,6 +80,7 @@
 				document.getElementById('BALISE_3_RSSI').innerHTML = balise_3;
 				document.getElementById('BALISE_4_RSSI').innerHTML = balise_4;
 				document.getElementById('BALISE_5_RSSI').innerHTML = balise_5;
+				document.getElementById('date').innerHTML = date;
 			}
 
 			window.onload = function() {
@@ -136,6 +138,7 @@
 			<span class="rssi" id="BALISE_4_RSSI" style="left: 926px; bottom: 926px">0</span>
 			<span class="rssi" id="BALISE_5_RSSI" style="left: 145px; bottom: 545px">0</span>
 			<button type="button" onclick="hide()">Change</button>
+			<div id="date"></div>
 		</div>
 	</body>
 </html>
