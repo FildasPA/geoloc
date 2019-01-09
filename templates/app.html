@@ -66,9 +66,10 @@
 				document.getElementById(id).style.left = x;
 				document.getElementById(id).style.bottom = y;
 
+				// Met à jour les RSSIS des balises
 				for (var key in rssis) {
 					if (rssis.hasOwnProperty(key)) {
-						document.getElementById('b'+key).innerHTML = x;
+						document.getElementById(key).innerHTML = rssis[key];
 					}
 				}
 			}

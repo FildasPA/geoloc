@@ -7,8 +7,17 @@ from flask import request
 
 app = Flask(__name__)
 
-x = 3
-y = 2
+x = -1
+y = -1
+rssis = {}
+
+BEACONS = [
+    'BALISE_1',
+    'BALISE_2',
+    'BALISE_3',
+    'BALISE_4',
+    'BALISE_5'
+]
 
 @app.route('/')
 def index():
@@ -17,17 +26,27 @@ def index():
 
 @app.route('/setPosition')
 def setPosition():
-    # global x, y
-    # x = request.args.get('x')
-    # y = request.args.get('y')
-    for arg in request.args:
-        print(arg)
+    global x, y, rssis
+    x = request.args.get('x')
+    y = request.args.get('y')
+    for beacon in BEACONS:
+        if beacon in request.args:
+            rssis[beacon] = request.args.get(beacon)
+        else:
+            rssis[beacon] = 0
+
     return ''
 
 
 @app.route('/getPosition')
 def getPosition():
-    return '{"x": %s, "y": %s}' % (x, y)
+    params = '{'
+    params += '"x": %s, "y": %s' % (x, y)
+    for beacon in BEACONS:
+        params += ', "%s": %s' % (beacon, rssis[beacon])
+
+    params += '}'
+    return
 
 
 if __name__ == '__main__':
