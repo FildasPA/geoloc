@@ -46,7 +46,7 @@ def setPosition():
 def getPosition():
     params = '{'
     params += '"x": %s, "y": %s' % (x, y)
-    params += ', "date":%s' % date
+    params += ', "date":"%s"' % date
     for beacon in BEACONS:
         if beacon in rssis:
             params += ', "%s": %s' % (beacon, rssis[beacon])
