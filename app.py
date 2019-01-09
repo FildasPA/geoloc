@@ -47,7 +47,7 @@ def getPosition():
             params += ', "%s": %s' % (beacon, rssis[beacon])
 
     params += '}'
-    return
+    return params
 
 
 if __name__ == '__main__':
