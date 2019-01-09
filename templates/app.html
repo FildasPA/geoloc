@@ -41,7 +41,12 @@
 					if (xmlhttp.readyState == XMLHttpRequest.DONE) {
 						if (xmlhttp.status == 200) {
 							var coor = JSON.parse(xmlhttp.responseText);
-							updatePosition(coor['x'], coor['y'], 'dot');
+							updatePosition(coor['x'], coor['y'], 'dot',
+							               coor['BALISE_1'],
+							               coor['BALISE_2'],
+							               coor['BALISE_3'],
+							               coor['BALISE_4'],
+							               coor['BALISE_5']);
 						}	else {
 							console.log('A problem occured during AJAX requesting');
 						}
@@ -59,28 +64,29 @@
 			}
 
 			// Update XBee icon position on the map
-			function updatePosition(x, y, id, rssis={}) {
+			function updatePosition(x, y, id,
+			                        balise_1, balise_2, balise_3, balise_4, balise_5) {
 				console.log('x: '+x+', y: '+y);
 				x = String(126 + x * 122)+'px';
 				y = String(133 + y * 122)+'px';
 				document.getElementById(id).style.left = x;
 				document.getElementById(id).style.bottom = y;
 
-				// Met à jour les RSSIS des balises
-				for (var key in rssis) {
-					if (rssis.hasOwnProperty(key)) {
-						document.getElementById(key).innerHTML = rssis[key];
-					}
-				}
+				document.getElementById(key).innerHTML = rssis[key];
+				document.getElementById('BALISE_1_RSSI').innerHTML = balise_1;
+				document.getElementById('BALISE_2_RSSI').innerHTML = balise_2;
+				document.getElementById('BALISE_3_RSSI').innerHTML = balise_3;
+				document.getElementById('BALISE_4_RSSI').innerHTML = balise_4;
+				document.getElementById('BALISE_5_RSSI').innerHTML = balise_5;
 			}
 
 			window.onload = function() {
 				updatePosition({{x}}, {{y}},'dot');
-				updatePosition(0.9, 0.1,'BALISE_1_FORM');
-				updatePosition(4.9, 0.1,'BALISE_2_FORM');
-				updatePosition(1.2, 6.7,'BALISE_3_FORM');
-				updatePosition(6.2, 6.7,'BALISE_4_FORM');
-				updatePosition(-0.2, 3.4,'BALISE_5_FORM');
+				// updatePosition(0.9, 0.1,'BALISE_1_FORM');
+				// updatePosition(4.9, 0.1,'BALISE_2_FORM');
+				// updatePosition(1.2, 6.7,'BALISE_3_FORM');
+				// updatePosition(6.2, 6.7,'BALISE_4_FORM');
+				// updatePosition(-0.2, 3.4,'BALISE_5_FORM');
 			}
 		</script>
 	</head>
@@ -100,11 +106,11 @@
 			<span class="nb" id="nb3" style="left: 288px; bottom: 826px">3</span>
 			<span class="nb" id="nb4" style="left: 897px; bottom: 826px">4</span>
 			<span class="nb" id="nb5" style="left: 117px; bottom: 424px">5</span>
-			<span class="rssi" id="BALISE_1" style="left: 280px; bottom: 24px">0</span>
-			<span class="rssi" id="BALISE_2" style="left: 770px; bottom: 24px">0</span>
-			<span class="rssi" id="BALISE_3" style="left: 315px; bottom: 829px">0</span>
-			<span class="rssi" id="BALISE_4" style="left: 926px; bottom: 829px">0</span>
-			<span class="rssi" id="BALISE_5" style="left: 145px; bottom: 425px">0</span>
+			<span class="rssi" id="BALISE_1_RSSI" style="left: 280px; bottom: 24px">0</span>
+			<span class="rssi" id="BALISE_2_RSSI" style="left: 770px; bottom: 24px">0</span>
+			<span class="rssi" id="BALISE_3_RSSI" style="left: 315px; bottom: 829px">0</span>
+			<span class="rssi" id="BALISE_4_RSSI" style="left: 926px; bottom: 829px">0</span>
+			<span class="rssi" id="BALISE_5_RSSI" style="left: 145px; bottom: 425px">0</span>
 		</div>
 	</body>
 </html>
