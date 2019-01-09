@@ -91,11 +91,16 @@
 			}
 
 			function hide() {
+				els = document.getElementsByClassName("beacon_marker");
 				if(document.getElementById("BALISE_1_RSSI").style.visibility=="visible") {
-					document.getElementsByClassName("beacon_marker").style.visibility = "hidden";
+					[].forEach.call(els, function (el) {
+						el.style.visibility = "hidden";
+					});
 				}
 				else {
-					document.getElementsByClassName("beacon_marker").style.visibility = "visible";
+					[].forEach.call(els, function (el) {
+						el.style.visibility = "visible";
+					});
 				}
 			}
 		</script>
