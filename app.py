@@ -11,6 +11,7 @@ app = Flask(__name__)
 x = -1
 y = -1
 rssis = {}
+date = ''
 
 BEACONS = [
     'BALISE_1',
