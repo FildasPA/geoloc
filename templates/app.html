@@ -59,12 +59,18 @@
 			}
 
 			// Update XBee icon position on the map
-			function updatePosition(x, y,id) {
+			function updatePosition(x, y, id, rssis={}) {
 				console.log('x: '+x+', y: '+y);
 				x = String(126 + x * 122)+'px';
 				y = String(133 + y * 122)+'px';
 				document.getElementById(id).style.left = x;
 				document.getElementById(id).style.bottom = y;
+
+				for (var key in rssis) {
+					if (rssis.hasOwnProperty(key)) {
+						document.getElementById('b'+key).innerHTML = x;
+					}
+				}
 			}
 
 			window.onload = function() {
