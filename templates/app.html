@@ -22,7 +22,7 @@
 				border-radius: 50%;
 				display: inline-block;
 			}
-			.nb {
+			.beacon_marker {
 				position: absolute;
 				color: white;
 			}
@@ -31,6 +31,8 @@
 				color: purple;
 				text-shadow: 2px 2px 3px #a0a0a0;
 			}
+
+			.beacon_marker
 		</style>
 		<script>
 			// Send a request to the server asking for the position
@@ -92,24 +94,34 @@
 
 	<body>
 		<div class="contenu">
-			<img src="static/plan-cropped.png">
+			<img src="static/plancropped.png">
 			<span class="dot" id="dot"></span>
-			<span class="balise" id="BALISE_1_FORM"></span>
-			<span class="balise" id="BALISE_2_FORM"></span>
-			<span class="balise" id="BALISE_3_FORM"></span>
-			<span class="balise" id="BALISE_4_FORM"></span>
-			<span class="balise" id="BALISE_5_FORM"></span>
+			<span class="balise" id="BALISE_1_FORM" style="left: 240px; bottom: 21px">
 
-			<span class="nb" id="nb1" style="left: 250px; bottom: 21px">1</span>
-			<span class="nb" id="nb2" style="left: 740px; bottom: 21px">2</span>
-			<span class="nb" id="nb3" style="left: 288px; bottom: 826px">3</span>
-			<span class="nb" id="nb4" style="left: 897px; bottom: 826px">4</span>
-			<span class="nb" id="nb5" style="left: 117px; bottom: 424px">5</span>
+			</span>
+			<span class="balise" id="BALISE_2_FORM" style="left: 730px; bottom: 21px">
+
+			</span>
+			<span class="balise" id="BALISE_3_FORM" style="left: 278px; bottom: 826px">
+
+			</span>
+			<span class="balise" id="BALISE_4_FORM" style="left: 887px; bottom: 826px">
+
+			</span>
+			<span class="balise" id="BALISE_5_FORM" style="left: 107px; bottom: 424px">
+
+			</span>
+
+			<span class="beacon_marker" id="nb1" style="left: 250px; bottom: 21px">1</span>
+			<span class="beacon_marker" id="nb2" style="left: 740px; bottom: 21px">2</span>
+			<span class="beacon_marker" id="nb3" style="left: 288px; bottom: 826px">3</span>
+			<span class="beacon_marker" id="nb4" style="left: 897px; bottom: 826px">4</span>
+			<span class="beacon_marker" id="nb5" style="left: 117px; bottom: 424px">5</span>
 			<span class="rssi" id="BALISE_1_RSSI" style="left: 280px; bottom: 24px">0</span>
 			<span class="rssi" id="BALISE_2_RSSI" style="left: 770px; bottom: 24px">0</span>
-			<span class="rssi" id="BALISE_3_RSSI" style="left: 315px; bottom: 829px">0</span>
-			<span class="rssi" id="BALISE_4_RSSI" style="left: 926px; bottom: 829px">0</span>
-			<span class="rssi" id="BALISE_5_RSSI" style="left: 145px; bottom: 425px">0</span>
+			<span class="rssi" id="BALISE_3_RSSI" style="left: 315px; bottom: 929px">0</span>
+			<span class="rssi" id="BALISE_4_RSSI" style="left: 926px; bottom: 929px">0</span>
+			<span class="rssi" id="BALISE_5_RSSI" style="left: 145px; bottom: 525px">0</span>
 		</div>
 	</body>
 </html>
