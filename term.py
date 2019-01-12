@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Fonctions permettant de styliser l'affichage dans le terminal"""
+"""Fonctions permettant de styliser l'affichage dans le terminal
+Basé sur py-term : https://github.com/gravmatt/py-term"""
 
 import sys
 

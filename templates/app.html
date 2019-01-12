@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>Geolocalisation BS</title>
+		<title>Geolocalisation en intérieur</title>
 		<style>
 			.contenu {
 				position: relative;
@@ -32,7 +32,6 @@
 				text-shadow: 2px 2px 3px #a0a0a0;
 				font-size: 2em;
 			}
-
 		</style>
 		<script>
 			// Send a request to the server asking for the position
@@ -68,7 +67,8 @@
 
 			// Update XBee icon position on the map
 			function updatePosition(x, y, id,
-			                        balise_1, balise_2, balise_3, balise_4, balise_5, date) {
+			                        balise_1, balise_2, balise_3, balise_4, balise_5,
+			                        date) {
 				console.log('x: '+x+', y: '+y);
 				var left = String(126 + x * 122)+'px';
 				var bottom = String(133 + y * 122)+'px';
@@ -85,16 +85,11 @@
 
 			window.onload = function() {
 				updatePosition({{x}}, {{y}},'dot');
-				// updatePosition(0.9, 0.1,'BALISE_1_FORM');
-				// updatePosition(4.9, 0.1,'BALISE_2_FORM');
-				// updatePosition(1.2, 6.7,'BALISE_3_FORM');
-				// updatePosition(6.2, 6.7,'BALISE_4_FORM');
-				// updatePosition(-0.2, 3.4,'BALISE_5_FORM');
 			}
 
-			function hide() {
+			function toggleInformations() {
 				els = document.getElementsByClassName("rssi");
-				if(document.getElementById("BALISE_1_RSSI").style.visibility=="visible") {
+				if(document.getElementById("BALISE_1_RSSI").style.visibility == "visible") {
 					Array.prototype.forEach.call(els, function(el) {
 						el.style.visibility = "hidden";
 					});
@@ -137,7 +132,7 @@
 			<span class="rssi" id="BALISE_3_RSSI" style="left: 315px; bottom: 950px">0</span>
 			<span class="rssi" id="BALISE_4_RSSI" style="left: 926px; bottom: 950px">0</span>
 			<span class="rssi" id="BALISE_5_RSSI" style="left: 145px; bottom: 568px">0</span>
-			<button type="button" onclick="hide()">Change</button>
+			<button type="button" onclick="toggleInformations()">Afficher/masquer</button>
 			<div id="date" style="font-size: 2em"></div>
 		</div>
 	</body>

@@ -4,11 +4,11 @@
 et de récupérer les informations retournées, dont le RSSI.
 
 Notamment, la fonction get_fingerprint permet de récupérer une empreinte
-complète : des messages sont envoyés jusqu'à avoir récupérer un nombre
-donné de valeurs pour chaque balise, qui seront ensuite moyennées."""
+complète."""
 
 import serial
 from time import sleep
+
 import term
 
 # Nombre de valeurs à récupérer par balise pour constituer une empreinte
@@ -29,18 +29,16 @@ print(ser.name)
 
 def readline(ser):
     """Lis et retourne une ligne reçue sur le port série"""
-
     line = ''
     while True:
         byte = ser.read()
-        if byte == '\r': # fin de ligne ?
+        if byte == '\r': # détecte la fin d'une ligne
             return line
         line += byte
 
 
 def read_beacon_infos(ser):
     """Lis et retourne toutes les informations d'une balise."""
-
     infos = []
     while True:
         line = readline(ser)
@@ -50,8 +48,7 @@ def read_beacon_infos(ser):
 
 
 def read_beacons(ser):
-    """"Lis et retourne les informations de toutes les balises."""
-
+    """"Lis et retourne les informations de toutes les balises ayant répondu."""
     beacons_infos = {}
     while True:
         infos = read_beacon_infos(ser)
@@ -61,27 +58,27 @@ def read_beacons(ser):
 
 
 def send():
-    """Envoie la commande 'ATND' aux balises et retourne
-    les informations reçues.
+    """Récupère et retourne les RSSI associé à chaque balise disponible.
+    Pour cela, on utilise la commande 'ATND'.
 
     La commande 'ATND' retourne les informations suivantes:
     - adresse MY
     - numéro de série SH (partie haute)
     - numéro de série SL (partie basse)
     - RSSI (force du signal radio)
-    - nom du module"""
-    ser.write('+++')
+    - nom du module (balise)"""
+    ser.write('+++') # Initialise la communication en mode AT avec les balises
     print(term.yellow('+++'))
     incomingByte = ser.read(size=3)
-    if (incomingByte == 'OK\r'):
+    if (incomingByte == 'OK\r'): # 'OK' signifie que l'initialisation a bien été effectuée
         term.clear_previous_line()
         print(term.green('OK'))
         ser.write('ATND\r')
-        finger = read_beacons(ser)
-        if finger:
+        infos = read_beacons(ser)
+        if infos:
             term.clear_previous_line()
-            print(finger)
-        return finger
+            print(infos)
+        return infos
 
 
 def get_fingerprint():
@@ -89,8 +86,10 @@ def get_fingerprint():
     pour chaque balise, puis retourne l'empreinte constituée des moyennes de
     ces valeurs."""
     global n
+    # Initialise un dictionnaire de listes pour chaque balise dont le nom  est
+    # indiqué dans la liste BEACONS
     rssi_lists = {beacon:list() for beacon in BEACONS}
-    # Tant qu'on a pas au moins n valeurs pour chaque balise
+    # Tant qu'on a pas au moins n valeurs pour chaque balise...
     while not all(len(lst) >= n for beacon, lst in rssi_lists.iteritems()):
         # Récupère les RSSI renvoyés par les balises actuellement disponibles
         values = send()
@@ -98,7 +97,7 @@ def get_fingerprint():
             for beacon, rssi in values.iteritems():
                 rssi_lists[beacon].append(rssi)
 
-    # Calcule la moyenne des RSSIs pour chaque balise
+    # Calcule la moyenne des RSSI pour chaque balise
     fingerprint = {}
     for beacon, lst in rssi_lists.iteritems():
         fingerprint[beacon] = int(sum(lst) / float(len(lst)))
@@ -107,6 +106,7 @@ def get_fingerprint():
 
 
 def main():
+    """Cette fonction ne fait qu'afficher les valeurs reçues"""
     while True:
         send()
 
